@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker compose build rust_vue_dev

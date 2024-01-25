@@ -1,0 +1,20 @@
+FROM jrl-base-dev-image:latest
+
+ARG USERNAME
+
+# Install curl (or any necessary packages)
+RUN sudo apt-get update && \
+    sudo apt-get install -y curl && \
+    sudo rm -rf /var/lib/apt/lists/*
+
+# Install Rust toolchain
+# RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN cd /home/${USERNAME} \
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o rustup.sh
+
+RUN cd /home/${USERNAME} \
+    && sh rustup.sh -y \
+    && rm rustup.sh    # Remove the downloaded script after execution
+
+# Set working directory for Rust development
+WORKDIR /home/${USERNAME}/workspace

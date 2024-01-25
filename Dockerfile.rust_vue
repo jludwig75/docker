@@ -1,0 +1,27 @@
+FROM jrl-base-dev-image:latest
+
+ARG USERNAME
+
+# Install necessary tools for Vue web development - npm, vue, vuetify, etc.
+# Example commands - modify as needed
+RUN sudo apt-get update && \
+    DEBIAN_FRONTEND=noninteractive sudo apt-get install -y npm && \
+    sudo npm install -g @vue/cli vuetify && \
+    sudo apt-get clean && \
+    sudo rm -rf /var/lib/apt/lists/*
+
+# Install curl (or any necessary packages)
+RUN sudo apt-get update && \
+    sudo apt-get install -y curl && \
+    sudo rm -rf /var/lib/apt/lists/*
+
+# Install Rust toolchain
+# RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN cd /home/${USERNAME} \
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o rustup.sh
+
+RUN cd /home/${USERNAME} \
+    && sh rustup.sh -y \
+    && rm rustup.sh    # Remove the downloaded script after execution
+
+WORKDIR /home/${USERNAME}/workspace

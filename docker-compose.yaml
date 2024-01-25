@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  rust_dev:
+    security_opt:
+      - apparmor:unconfined
+    build:
+      context: .
+      dockerfile: Dockerfile.rust
+      args:
+        - USERNAME=${USERNAME}
+    volumes:
+      - .:/home/${USERNAME}/workspace
+      - ~/.ssh:/home/vivint/.ssh
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+      - /var/run/dbus/:/var/run/dbus/
+    # Other configurations specific to Rust development container
+
+  vue_dev:
+    security_opt:
+      - apparmor:unconfined
+    build:
+      context: .
+      dockerfile: Dockerfile.vue
+      args:
+        - USERNAME=${USERNAME}
+    volumes:
+      - .:/home/${USERNAME}/workspace
+      - ~/.ssh:/home/vivint/.ssh
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+      - /var/run/dbus/:/var/run/dbus/
+    # Other configurations specific to Vue development container
+
+  rust_vue_dev:
+    security_opt:
+      - apparmor:unconfined
+    build:
+      context: .
+      dockerfile: Dockerfile.rust_vue
+      args:
+        - USERNAME=${USERNAME}
+    volumes:
+      - .:/home/${USERNAME}/workspace
+      - ~/.ssh:/home/vivint/.ssh
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+      - /var/run/dbus/:/var/run/dbus/
+    # Other configurations specific to Vue development container
